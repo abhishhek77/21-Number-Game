@@ -1,0 +1,108 @@
+:root {
+  --bg: #e6edf1;
+  --ink: #13222d;
+  --muted: #5b6b77;
+  --cell: #f7fafb;
+  --line: #c3d0d8;
+  --you: #2a4fd6;
+  --cpu: #f0a500;
+  --on-you: #fff;
+  --on-cpu: #13222d;
+  --win: #1d8a5a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101a22;
+    --ink: #e8eff3;
+    --muted: #93a4b0;
+    --cell: #182630;
+    --line: #2c3f4d;
+    --you: #6f8cff;
+    --cpu: #f5b82e;
+    --on-you: #0d1630;
+    --on-cpu: #13222d;
+    --win: #4cc790;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 1rem;
+}
+.game { width: 100%; max-width: 720px; }
+h1 {
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 .25rem;
+  line-height: 1;
+}
+.rules { color: var(--muted); margin: 0 0 1.5rem; max-width: 46ch; }
+
+.setup { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: end; margin-bottom: 1.5rem; }
+.setup label { display: flex; flex-direction: column; font-size: .85rem; color: var(--muted); gap: .25rem; }
+.setup .check { flex-direction: row; align-items: center; gap: .4rem; padding-bottom: .5rem; }
+select {
+  font: inherit; color: var(--ink); background: var(--cell);
+  border: 1.5px solid var(--line); border-radius: 8px; padding: .45rem .6rem;
+}
+button { font: inherit; cursor: pointer; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid var(--you); outline-offset: 2px; }
+.ghost {
+  background: none; color: var(--ink); border: 1.5px solid var(--line);
+  border-radius: 8px; padding: .45rem .9rem; margin-left: auto;
+}
+.ghost:hover { border-color: var(--ink); }
+
+/* The track: 21 cells, filled in the colour of whoever moved there */
+.track {
+  list-style: none; margin: 0 0 1.25rem; padding: 0;
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+}
+.track li {
+  aspect-ratio: 1; display: grid; place-items: center;
+  background: var(--cell); border: 1.5px solid var(--line); border-radius: 10px;
+  font-weight: 600; font-size: clamp(1rem, 3.5vw, 1.4rem); position: relative;
+  transition: background-color .25s, color .25s, transform .25s;
+}
+.track li.you { background: var(--you); color: var(--on-you); border-color: var(--you); }
+.track li.cpu { background: var(--cpu); color: var(--on-cpu); border-color: var(--cpu); }
+.track li.now { transform: scale(1.08); box-shadow: 0 0 0 3px var(--ink); }
+.track li.win { box-shadow: 0 0 0 3px var(--win); }
+.show-hints .track li.safe::after {
+  content: ""; position: absolute; bottom: 6px; width: 14px; height: 4px;
+  border-radius: 2px; background: var(--ink); opacity: .55;
+}
+
+.status { font-size: 1.25rem; font-weight: 600; min-height: 1.6em; margin: 0 0 .75rem; }
+.moves { display: flex; gap: .75rem; margin-bottom: 1.5rem; }
+.moves button {
+  flex: 1; padding: .9rem 0; font-size: 1.4rem; font-weight: 800;
+  background: var(--ink); color: var(--bg); border: 0; border-radius: 12px;
+  transition: transform .1s;
+}
+.moves button:active:not(:disabled) { transform: translateY(2px); }
+.moves button:disabled { opacity: .3; cursor: not-allowed; }
+
+.lower { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start; }
+.log { list-style: none; margin: 0; padding: 0; max-height: 9.5rem; overflow-y: auto; color: var(--muted); font-size: .95rem; }
+.log li { padding: .2rem 0; border-bottom: 1px solid var(--line); }
+.score { display: grid; gap: .4rem; font-size: 1rem; white-space: nowrap; }
+.score strong { margin-left: .4rem; font-size: 1.3rem; }
+.dot { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; margin-right: .4rem; }
+.dot.you { background: var(--you); } .dot.cpu { background: var(--cpu); }
+
+@media (max-width: 480px) {
+  .track { grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .lower { grid-template-columns: 1fr; }
+  .ghost { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

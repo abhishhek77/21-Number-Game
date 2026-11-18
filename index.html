@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Race to 21</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game">
+    <h1>Race to 21</h1>
+    <p class="rules">Take turns adding 1, 2 or 3 to the total. Whoever lands on exactly 21 wins.</p>
+
+    <section class="setup" aria-label="Game settings">
+      <label>Difficulty
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </label>
+      <label>Who starts
+        <select id="starter">
+          <option value="player">You</option>
+          <option value="computer">Computer</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" id="hints"> Show safe spots</label>
+      <button id="new" class="ghost">New game</button>
+    </section>
+
+    <ol id="track" class="track" aria-label="Number track from 1 to 21"></ol>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <div id="moves" class="moves" role="group" aria-label="Choose how much to add">
+      <button data-move="1">+1</button>
+      <button data-move="2">+2</button>
+      <button data-move="3">+3</button>
+    </div>
+
+    <div class="lower">
+      <ul id="log" class="log" aria-label="Move history"></ul>
+      <div class="score">
+        <div><span class="dot you"></span>You <strong id="score-p">0</strong></div>
+        <div><span class="dot cpu"></span>Computer <strong id="score-c">0</strong></div>
+      </div>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
